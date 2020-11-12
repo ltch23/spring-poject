@@ -1,6 +1,5 @@
 package com.ltch.serviceproduct.Service;
 
-import com.ltch.serviceproduct.Entity.Category;
 import com.ltch.serviceproduct.Entity.Product;
 import com.ltch.serviceproduct.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class ProductServiceImpl implements  ProductService {
     }
 
     @Override
-    public Product getProduct(Long id) {
+    public Product getProduct(String id) {
         return productRepository.findById(id).orElse(null);
     }
 
@@ -36,20 +35,20 @@ public class ProductServiceImpl implements  ProductService {
     @Override
     public Product updateProduct(Product product) {
 
-            Product productDb = getProduct(product.getId());
+            Product productDb = getProduct(product.get_id().toString());
             if (productDb == null){
                 return null;
             }
             productDb.setName(product.getName());
             productDb.setDescription(product.getDescription());
-            productDb.setCategory(product.getCategory());
+            productDb.setCategories(product.getCategories());
             productDb.setPrice(product.getPrice());
 
             return productRepository.save(productDb);
     }
 
     @Override
-    public Product updateStock(Long id, Double quantity) {
+    public Product updateStock(String id, Double quantity) {
         Product productDB = getProduct(id);
         if (productDB==null) return null;
         Double stock = productDB.getStock()+quantity;
@@ -59,15 +58,11 @@ public class ProductServiceImpl implements  ProductService {
     }
 
     @Override
-    public Product deleteProduct(Long id) {
+    public Product deleteProduct(String id) {
         Product productDB = getProduct(id);
         if (productDB==null) return null;
         productDB.setStatus(0);
         return productRepository.save(productDB);
     }
 
-    @Override
-    public List<Product> findByCategory(Category category) {
-        return productRepository.findByCategory(category);
-    }
 }

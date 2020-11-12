@@ -1,34 +1,26 @@
 package com.ltch.serviceproduct.Entity;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@Table(name="tbl_products")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Document(collection = "c_products")
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private ObjectId _id;
     private String name;
     private String description;
     private Double stock;
     private Double price;
     private Integer status;
-    @Column(name="createat")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
-
+    private List<Category> categories;
 }
