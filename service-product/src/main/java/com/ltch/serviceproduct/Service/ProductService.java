@@ -1,8 +1,6 @@
 package com.ltch.serviceproduct.Service;
 
-import com.ltch.serviceproduct.Entity.Category;
 import com.ltch.serviceproduct.Entity.Product;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
